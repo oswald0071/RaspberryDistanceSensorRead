@@ -1,8 +1,9 @@
 from flask import Flask, json
-import configparser
+
 from DistanceConfiguration import Config
 
 app = Flask(__name__)
+
 
 class Launcher:
     @staticmethod
@@ -11,20 +12,25 @@ class Launcher:
 
 
 @app.route('/')
-def hello_world():
+def root():
     return 'Distance Controller Module'
 
 
-@app.route('/distance/x')
-def get_x_distance():
-    return json.dumps({'distance' : Config.x_echo})
-
-
-@app.route('/distance/z')
-def get_z_distance():
-    return json.dumps({'distance' : Config.z_echo})
-
-
 @app.route('/distance')
-def getdistance():
-    return json.dumps({'distance_x' : Config.x_trigger, 'distance_z' : Config.z_echo})
+def get_distance():
+    distances = []
+    for item in Config.distanceItems:
+        x = Print(item.name, 1)
+        distances.append(x.__dict__)
+
+    return json.dumps(distances)
+
+
+class Print:
+    id = ''
+    distance = 0
+
+    def __init__(self, id, distance):
+        super().__init__()
+        self.id = id
+        self.distance = distance

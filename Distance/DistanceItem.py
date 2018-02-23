@@ -3,6 +3,7 @@ import RPi.GPIO as gpio
 
 
 class DistanceItem:
+    name = ''
     trig = 17
     echo = 27
 

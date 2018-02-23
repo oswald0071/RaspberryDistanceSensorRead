@@ -1,10 +1,21 @@
 import configparser
+import json
+
+from DistanceConfiguration.DistanceModel import DistanceModel
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-port = config['HOSTING']['Port']
-x_echo = config['DistanceX']['Echo']
-x_trigger = config['DistanceX']['Trigger']
-z_echo = config['DistanceZ']['Echo']
-z_trigger = config['DistanceZ']['Trigger']
+port = config.getint('HOSTING', 'Port')
+
+distanceItemNames = str(config['Distance']['Items']).split(',')
+print(distanceItemNames)
+distanceItems = []
+for item in distanceItemNames:
+    print(item)
+    x = DistanceModel()
+    x.name = item
+    x.echo = config[item]['Echo']
+    x.trigger = config[item]['Trigger']
+    distanceItems.append(x)
+
