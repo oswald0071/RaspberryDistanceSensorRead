@@ -15,7 +15,7 @@ for item in distanceItemNames:
     print(item)
     x = DistanceModel()
     x.name = item
-    x.echo = config[item]['Echo']
-    x.trigger = config[item]['Trigger']
+    x.echo = config.getint(item, 'Echo')
+    x.trigger = config.getint(item, 'Trigger')
     distanceItems.append(x)
 

@@ -35,7 +35,7 @@ def hello_world():
 @app.route('/distance')
 def get_distance():
     distances = []
-    for item in Config.distanceItems:
+    for item in distanceItems:
         x = Print(item.name, item.getDistance())
         distances.append(x.__dict__)
 
@@ -47,6 +47,5 @@ class Print:
     distance = 0
 
     def __init__(self, id, distance):
-        super().__init__()
         self.id = id
         self.distance = distance

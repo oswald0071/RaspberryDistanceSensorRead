@@ -20,5 +20,5 @@ def get_ip_address(ifname):
 if __name__ == '__main__':
     host = get_ip_address('wlan0')
     port = Config.port
-    print('Host: ' + str(host) + ' Port: ' + port)
+    print('Host: ' + str(host) + ' Port: ' + str(port))
     Launcher.start(host, port)
