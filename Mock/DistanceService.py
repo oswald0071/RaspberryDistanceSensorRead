@@ -1,18 +1,8 @@
 from flask import Flask, json
 import configparser
+from DistanceConfiguration import Config
 
 app = Flask(__name__)
-
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-print(config['HOSTING']['Port'])
-xEcho = config['DistanceX']['Echo']
-xTrigger = config['DistanceX']['Trigger']
-yEcho = config['DistanceY']['Echo']
-yTrigger = config['DistanceY']['Trigger']
-print({'xEcho': xEcho, 'xTrigger': xTrigger, 'yEcho': yEcho, 'yTrigger': yTrigger})
-
 
 class Launcher:
     @staticmethod
@@ -27,14 +17,14 @@ def hello_world():
 
 @app.route('/distance/x')
 def get_x_distance():
-    return json.dumps({'distance' : xEcho})
+    return json.dumps({'distance' : Config.x_echo})
 
 
 @app.route('/distance/z')
 def get_z_distance():
-    return json.dumps({'distance' : 14})
+    return json.dumps({'distance' : Config.z_echo})
 
 
 @app.route('/distance')
 def getdistance():
-    return json.dumps({'distance_x' : 12, 'distance_z' : 14})
+    return json.dumps({'distance_x' : Config.x_trigger, 'distance_z' : Config.z_echo})

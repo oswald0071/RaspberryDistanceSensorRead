@@ -2,19 +2,20 @@ from flask import Flask, json
 import configparser
 
 from Distance.DistanceItem import DistanceItem
+from DistanceConfiguration import Config
 
 app = Flask(__name__)
 config = configparser.ConfigParser()
 config.read('config.ini')
 
 distanceX = DistanceItem()
-distanceX.trig = config['DistanceX']['Trigger'];
-distanceX.echo = config['DistanceX']['Echo']
+distanceX.trig = Config.x_trigger
+distanceX.echo = Config.x_echo
 distanceX.initialize()
 
 distanceZ = DistanceItem()
-distanceZ.trig = config['DistanceZ']['Trigger'];
-distanceZ.echo = config['DistanceZ']['Echo']
+distanceZ.trig = Config.z_trigger
+distanceZ.echo = Config.z_echo
 distanceZ.initialize()
 
 
