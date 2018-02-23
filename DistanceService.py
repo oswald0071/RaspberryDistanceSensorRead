@@ -1,20 +1,24 @@
 import json
 from flask import Flask
 from os import environ
+import socket
+import fcntl
 import struct
 
-from Distance.DistanceItem import DistanceItem
-
-app = Flask(__name__)
-distanceX = DistanceItem()
-distanceX.initialize()
+from DistanceConfiguration import Config
+from Service.DistanceService import Launcher
 
 
-@app.route('/')
-def hello_world():
-    return 'Distance Controller Module'
+def get_ip_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', ifname[:15])
+    )[20:24])
 
-
-@app.route('/dist/x')
-def getXdistance():
-    return json.dumps({'distance' : distanceX.getDistance()})
+if __name__ == '__main__':
+    host = get_ip_address('wlan0')
+    port = Config.port
+    print('Host: ' + str(host) + ' Port: ' + port)
+    Launcher.start(host, port)

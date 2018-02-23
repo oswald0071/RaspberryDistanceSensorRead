@@ -8,26 +8,31 @@ class DistanceItem:
 
     def initialize(self):
         gpio.setmode(gpio.BCM)
-        gpio.setup(self._trig, gpio.OUT)
-        gpio.setup(self._echo, gpio.IN)
-        gpio.output(self._trig,False)
-        print('Messung auf GPIO ' + str(self._gpioPort) + ' started.')
+
+        print("Messung startet")
+        #print("")
+
+        gpio.setup(self.trig, gpio.OUT)
+        gpio.setup(self.echo, gpio.IN)
+
+        gpio.output(self.trig,False)
+
         time.sleep(0.5)
 
     def getDistance(self):
-        print('Begin measurement.')
-        gpio.output(self._trig,True)
-        time.sleep(0.00001)
-        gpio.output(self._trig,False)
 
-        while gpio.input(self._echo) == 0:
+        gpio.output(self.trig,True)
+        time.sleep(0.00001)
+        gpio.output(self.trig,False)
+
+        while gpio.input(self.echo) == 0:
             start = time.time()
 
-        while gpio.input(self._echo) == 1:
+        while gpio.input(self.echo) == 1:
             stop = time.time()
+    
+        vergangeneZeit = stop-start
 
-        timeleft = stop-start
-
-        distance = round(timeleft*34000/2, 2)
-        print('Measured Distance: ' + str(distance))
-        return distance
+        entfernung = round(vergangeneZeit*34000/2, 2)
+        print(entfernung)
+        return entfernung
