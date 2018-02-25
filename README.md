@@ -1,6 +1,12 @@
 # RaspberryDistanceSensorRead
 Read a raspberry GPIO Distance Sensor via python script
 
+# Preconditions
+python plugin configparser
+```
+pip install configparser
+```
+
 # Installation
 Simply clone this repo
 
@@ -11,13 +17,13 @@ In the config.ini-File you can set the following settings:
 Port = 5001
 
 [Distance]
-Items = DistanceX,DistanceY
+Items = DistanceX,DistanceZ
 
 [DistanceX]
 Echo = 17
 Trigger = 27
 
-[DistanceY]
+[DistanceZ]
 Echo = 3
 Trigger = 5
 ```
@@ -27,5 +33,11 @@ Trigger = 5
 python DistanceService.py
 ```
 
+# Development
+Intellij with python plugin
+
 # Contributions
 desired
+
+# License
+MIT
