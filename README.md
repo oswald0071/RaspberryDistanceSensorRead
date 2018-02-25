@@ -10,7 +10,7 @@ In the config.ini-File you can set the following settings:
 [HOSTING]
 Port = 5001
 
-[DISTANCE]
+[Distance]
 Items = DistanceX,DistanceY
 
 [DistanceX]
