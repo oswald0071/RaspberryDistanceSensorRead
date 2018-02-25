@@ -10,6 +10,9 @@ In the config.ini-File you can set the following settings:
 [HOSTING]
 Port = 5001
 
+[DISTANCE]
+Items = DistanceX,DistanceY
+
 [DistanceX]
 Echo = 17
 Trigger = 27
