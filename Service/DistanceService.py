@@ -1,30 +1,18 @@
 from flask import Flask, json
-
-from Distance.DistanceItem import DistanceItem
-from DistanceConfiguration import Config
+from BL import DistanceItemFactory
 
 app = Flask(__name__)
 
-distanceX = DistanceItem()
 
-#distanceZ = DistanceItem()
-#distanceZ.trig = int(Config.z_trigger)
-#distanceZ.echo = int(Config.z_echo)
-#distanceZ.initialize()
+class Service:
+    distance_items = object()
 
-distanceItems = []
-
-class Launcher:
-    @staticmethod
-    def start(host, port):
-        for item in Config.instance.distance_items:
-            x = DistanceItem()
-            x.name = item.name
-            x.echo = item.echo
-            x.trigger = item.trigger
-        x.initialize()
-        distanceItems.append(x)
+    def start(self, host, port):
+        self.distance_items = DistanceItemFactory.get_init_distance_items()
         app.run(host, port)
+
+
+instance = Service()
 
 
 @app.route('/')
@@ -35,8 +23,8 @@ def hello_world():
 @app.route('/distance')
 def get_distance():
     distances = []
-    for item in distanceItems:
-        x = Print(item.name, item.getDistance())
+    for item in instance.distance_items:
+        x = Print(item.name, item.get_distance())
         distances.append(x.__dict__)
 
     return json.dumps(distances)
