@@ -17,7 +17,7 @@ distanceItems = []
 class Launcher:
     @staticmethod
     def start(host, port):
-        for item in Config.distanceItems:
+        for item in Config.instance.distance_items:
             x = DistanceItem()
             x.name = item.name
             x.echo = item.echo

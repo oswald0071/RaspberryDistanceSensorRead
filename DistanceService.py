@@ -1,6 +1,3 @@
-import json
-from flask import Flask
-from os import environ
 import socket
 import fcntl
 import struct
@@ -18,7 +15,9 @@ def get_ip_address(ifname):
     )[20:24])
 
 if __name__ == '__main__':
+    Config.load_from_path('config.ini')
+    Config.print_config()
     host = get_ip_address('wlan0')
-    port = Config.port
+    port = Config.instance.port
     print('Host: ' + str(host) + ' Port: ' + str(port))
     Launcher.start(host, port)

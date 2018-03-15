@@ -19,8 +19,10 @@ def root():
 @app.route('/distance')
 def get_distance():
     distances = []
-    for item in Config.distanceItems:
-        x = Print(item.name, 1)
+    i = 1
+    for item in Config.instance.distance_items:
+        x = Print(item.name, i)
+        i += 1
         distances.append(x.__dict__)
 
     return json.dumps(distances)
