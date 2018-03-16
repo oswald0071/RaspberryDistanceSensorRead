@@ -4,6 +4,9 @@ import RPi.GPIO as gpio
 from DistanceConfiguration import DistanceConfigItem
 
 
+max_wait_time_sec = 1
+
+
 class DistanceItem:
     name = ''
     echo = -1
@@ -29,15 +32,25 @@ class DistanceItem:
         time.sleep(0.00001)
         gpio.output(self.trigger, False)
 
+        start = time.time()
         while gpio.input(self.echo) == 0:
             start = time.time()
 
+        max_time = time.time() + max_wait_time_sec
+
+        timeout_reached = False
         while gpio.input(self.echo) == 1:
+            if time.time() > max_time:
+                timeout_reached = True
+                print('WARNING wait timeout reached!')
+                break
             stop = time.time()
 
         passed_time = stop - start
 
-        distance = round(passed_time * 34000 / 2, 2)
+        distance = -1
+        if not timeout_reached:
+            distance = round(passed_time * 34000 / 2, 2)
         print('measured distance: ' + str(distance))
         return distance
 
