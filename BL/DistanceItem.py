@@ -32,17 +32,23 @@ class DistanceItem:
         time.sleep(0.00001)
         gpio.output(self.trigger, False)
 
+        stop = time.time()
+        timeout_reached = False
         start = time.time()
+        max_time = time.time() + max_wait_time_sec
         while gpio.input(self.echo) == 0:
+            if time.time() > max_time:
+                timeout_reached = True
+                print('WARNING wait timeout reached while waiting for echo 1!')
+                break
             start = time.time()
 
         max_time = time.time() + max_wait_time_sec
 
-        timeout_reached = False
         while gpio.input(self.echo) == 1:
             if time.time() > max_time:
                 timeout_reached = True
-                print('WARNING wait timeout reached!')
+                print('WARNING wait timeout reached while waiting for echo 1!')
                 break
             stop = time.time()
 
